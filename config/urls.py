@@ -18,9 +18,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
-from catalog.views import page_not_found
+from catalog.views import page_not_found, index
 
 urlpatterns = [
+    path('', index, name="home"),
+    path('', index, name="home"),
     path('admin/', admin.site.urls),
     path('catalog/', include('catalog.urls'))
 ]
