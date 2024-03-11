@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
-from .models import Category
+from .models import Category, Product
 # Create your views here.
 cats = {
     "food": "food",
@@ -26,12 +26,14 @@ def about(request):
 def categories(request):
     return HttpResponse("<h3>Catalog</h3>")
 
-def category(request, cat):
-    # if int(cat) > 2:
-    #     return redirect('categories') # Пример использования перенаправления
-    # if request.GET:
-    #     print(request.GET) # для использования query-параметров
-    return HttpResponse(f"<h3>Items from category {cats.get(str(cat))}</h3>")
+def category(request, category_slug):
+    products = Product.objects.all()
+    if category_slug == "electronics":
+        products = Product.electronics.all()
+
+    context = {"products": products}
+
+    return render(request, "products.html", context=context)
 
 def page_not_found(request, exception):
     return HttpResponseNotFound("<h3>Page not found</h3>")

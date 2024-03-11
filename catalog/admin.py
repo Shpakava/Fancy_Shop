@@ -9,7 +9,7 @@ class ProductAdmin(admin.ModelAdmin):
     # fields=["name", "stock", "is_available"]
     list_display = ["__str__", "name", "stock", "created_at"]
     readonly_fields = ["created_at", "get_image"] #поля только для чтения
-    prepopulated_fields = {"slug": ("name",)} #предопределенные поля
+    prepopulated_fields = {"slug": ("name",)}  # предопределенные поля
 
     def get_image(self, obj):
         return mark_safe(f'<img src={obj.pic.url} width="110" height="100">')
@@ -20,3 +20,10 @@ class ProductAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ["name"]
     prepopulated_fields = {"slug": ("name",)}
+    readonly_fields = ["get_image"]
+
+    def get_image(self, obj):
+        return mark_safe(f'<img src={obj.image.url} width="110" height="100">')
+
+    get_image.short_description = "Image"
+
