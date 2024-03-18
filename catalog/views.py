@@ -24,10 +24,9 @@ def categories(request):
 
 def category(request, category_slug):
     products = Category.objects.get(slug=category_slug).products.all()
-    if products:
-        context = {"products": products}
-        return render(request, "products.html", context=context)
-
+    context = {
+        "products": products
+    }
     return render(request, "products.html", context=context)
 
 def page_not_found(request, exception):

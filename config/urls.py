@@ -19,12 +19,14 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
 from catalog.views import page_not_found, index
+from profiles.views import register_user
 
 urlpatterns = [
     path('', index, name="home"),
     path('', index, name="home"),
     path('admin/', admin.site.urls),
-    path('catalog/', include('catalog.urls'))
+    path('catalog/', include('catalog.urls')),
+    path('register/', register_user, name="register")
 ]
 
 if settings.DEBUG:

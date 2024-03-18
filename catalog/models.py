@@ -49,7 +49,9 @@ class Product(models.Model):
     @property
     def updated_price(self):
         if self.discount:
-            self.price -= (decimal.Decimal(self.price) * (decimal.Decimal(self.discount / 100)))
+            new_price = decimal.Decimal(self.price) - (
+                        decimal.Decimal(self.price) * (decimal.Decimal(self.discount / 100)))
+            return round(new_price, 2)
         return round(decimal.Decimal(self.price), 2)
 
     def save(self, *args, **kwargs):
