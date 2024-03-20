@@ -5,7 +5,7 @@ from datetime import datetime
 # Create your models here.
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile_user", default=1)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile_user")
     first_name = models.CharField("First Name", max_length=100)
     last_name = models.CharField("Last Name", max_length=200)
     email = models.EmailField("email", max_length=200)
