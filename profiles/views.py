@@ -1,3 +1,4 @@
+import logging
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -6,6 +7,9 @@ from .forms import CreateUserForm
 from .decorators import unauthenticated_user
 
 # Create your views here.
+
+logger = logging.getLogger('fancy-shop-logger')
+
 @unauthenticated_user
 def register_user(request):
     form = CreateUserForm()
@@ -14,6 +18,7 @@ def register_user(request):
         if form.is_valid():
             username = form.cleaned_data["username"]
             if User.objects.filter(username=username).exists():
+                logger.warning(f"The user with username {username} already exists")
                 messages.info(request, f"The user with username {username} already exists")
             else:
                 form.save()
@@ -36,6 +41,7 @@ def login_user(request):
             login(request, user)
             return redirect("home")
         else:
+            logger.warning(f"Login or password do not match")
             messages.info(request, "Login or password do not match")
 
     return render(request, "login.html")
