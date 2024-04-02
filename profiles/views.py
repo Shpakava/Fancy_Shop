@@ -2,9 +2,11 @@ import logging
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CreateUserForm
 from .decorators import unauthenticated_user
+from .models import Profile
 
 # Create your views here.
 
@@ -50,3 +52,12 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect("home")
+
+
+@login_required(login_url="login")
+def get_profile_details(request, profile_slug):
+    profile = get_object_or_404(Profile, slug=profile_slug)
+    context = {
+        "profile": profile
+    }
+    return render(request, "profile.html", context=context)
