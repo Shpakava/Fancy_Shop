@@ -1,6 +1,8 @@
 import logging
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
+from django.views.generic import ListView
+
 from .models import Category, Product
 # Create your views here.
 
@@ -8,22 +10,26 @@ menu = ["Home", "Catalog", "About us"]
 
 logger = logging.getLogger('fancy-shop-logger')
 
-def index(request):
-    categories = Category.objects.all()
-    return render(
-        request,
-        "index.html",
-        context={
-            "title": "My Shop - Main page",
-            "menu": menu,
-            "categories": categories}
-    )
+
+class ShopHome(ListView):
+    model = Category
+    template_name = "index.html"
+    context_object_name = "categories"
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ShopHome, self).get_context_data(**kwargs)
+        context["title"] = "My Shop - Main page"
+        return context
+
+
+    # def get_queryset(self):
+    #     return Category.objects.filter(name="sport")
+
 
 def about(request):
     return render(request, "about.html")
 
-def categories(request):
-    return HttpResponse("<h3>Catalog</h3>")
 
 def category(request, category_slug):
     products = Category.objects.get(slug=category_slug).products.all()
