@@ -15,6 +15,7 @@ class ShopHome(ListView):
     model = Category
     template_name = "index.html"
     context_object_name = "categories"
+    paginate_by = 3
 
 
     def get_context_data(self, *, object_list=None, **kwargs):
