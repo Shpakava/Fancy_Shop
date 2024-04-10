@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
-from catalog.views import page_not_found, ShopHome, about
+from catalog.views import page_not_found, ShopHome, about, search
 from profiles.views import register_user, login_user, logout_user
 
 urlpatterns = [
@@ -29,7 +29,8 @@ urlpatterns = [
     path('profile/', include('profiles.urls')),
     path('register/', register_user, name="register"),
     path('login/', login_user, name="login"),
-    path('logout/', logout_user, name="logout")
+    path('logout/', logout_user, name="logout"),
+    path('search/', search, name="search_result"),
 ]
 
 if settings.DEBUG:

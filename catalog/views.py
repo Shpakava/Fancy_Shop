@@ -1,7 +1,7 @@
 import logging
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from .models import Category, Product
 # Create your views here.
@@ -24,6 +24,18 @@ class ShopHome(ListView):
         return context
 
 
+class ProductDetail(DetailView):
+    model = Product
+    template_name = "product.html"
+    context_object_name = "product"
+    slug_url_kwarg = "product_slug"
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ProductDetail, self).get_context_data(**kwargs)
+        context["title"] = f"My Shop - {self.model.name}"
+        return context
+
     # def get_queryset(self):
     #     return Category.objects.filter(name="sport")
 
@@ -39,6 +51,16 @@ def category(request, category_slug):
         "products": products
     }
     return render(request, "products.html", context=context)
+
+
+def search(request):
+    query = request.GET.get("q")
+    products = Product.objects.filter(name__icontains=query)
+    context = {
+        "products": products
+    }
+    return render(request, "products.html", context=context)
+
 
 def page_not_found(request, exception):
     return HttpResponseNotFound("<h3>Page not found</h3>")
