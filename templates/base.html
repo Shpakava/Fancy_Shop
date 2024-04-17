@@ -51,7 +51,17 @@
                     <li><a class="dropdown-item" href="{% url 'profile_details' request.user.profile_user.slug %}">Profile</a>
                     </li>
                     <li><a class="dropdown-item" href="{% url 'favorites_list' request.user.profile_user.slug %}">Favourites</a></li>
-                    <li>
+                    {% with total_items=cart|length %}
+                        {% if total_items > 0 %}
+                            <li><a class="dropdown-item" href="{% url 'cart:cart_details' %}">
+                                My Cart  <span class="badge bg-danger" style="border-radius: 15px;">{{ total_items }}</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{% url 'cart:cart_details' %}">My Cart</a></li>
+                        {% endif %}
+                    {% endwith %}
+                            <li>
                         <hr class="dropdown-divider">
                     </li>
                     <li><a class="dropdown-item" href="{% url 'logout' %}">Sign out</a></li>

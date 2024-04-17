@@ -22,7 +22,7 @@ class Profile(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def get_absolute_url(self):
-        return reverse("profile", kwargs={"profile_slug": self.slug})
+        return reverse("profile", kwargs={"profile_slug": self.slug, "category_slug": self.category.slug})
 
     def __str__(self):
         return f"{self.pk} - {self.user.username}"
