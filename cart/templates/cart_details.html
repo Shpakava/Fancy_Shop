@@ -68,8 +68,8 @@
                     <div class="card">
                         <div class="row p-4">
                             <div class="col p-2">
-                                <button class="btn btn-primary" type="button">Checkout</button>
-                                <button class="btn btn-outline-dark" type="button">Continue shopping</button>
+                                <button class="btn btn-primary" onclick="window.location.href='{% url 'orders:create_order' %}'" type="button">Checkout</button>
+                                <button class="btn btn-outline-dark" onclick="window.location.href='{% url 'home' %}'" type="button">Continue shopping</button>
                             </div>
                             <div class="col p-2 text-end">
                                 <h4>Total price: $ {{ cart.get_total_price }}</h4>

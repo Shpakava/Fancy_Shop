@@ -11,6 +11,10 @@ from catalog.models import Product
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile_user")
+    phone_number = models.CharField(verbose_name="Phone", max_length=50, blank=True)
+    shipping_address = models.CharField(verbose_name="Address", max_length=100, blank=True)
+    postcode = models.CharField(verbose_name="Postcode", max_length=50, blank=True)
+    city = models.CharField(verbose_name="City", max_length=100, blank=True)
     first_name = models.CharField("First Name", max_length=100)
     last_name = models.CharField("Last Name", max_length=200)
     email = models.EmailField("email", max_length=200)
